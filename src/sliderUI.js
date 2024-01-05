@@ -5,14 +5,15 @@ import girls from "./assests/images/girls.jpg";
 import mountain from "./assests/images/mountain.jpg";
 import arrow from "./assests/images/icon/chevron-down.svg";
 
-const imgArr = [sea, coast, girls, mountain];
+export const imgArr = [sea, coast, girls, mountain];
 
-function createImgHTML(imgUrl, id) {
+export function createImgHTML(imgUrl, elementId, imgId) {
   const img = document.createElement("img");
   img.classList.add("imgs");
   img.src = imgUrl;
-  img.id = id;
+  img.id = elementId;
   img.alt = "slider image";
+  img.dataset.imgid = imgId;
   return img;
 }
 
@@ -39,11 +40,11 @@ function createButtonHTML(className, id) {
   return btn;
 }
 
-function appendElement(container, element) {
+export function appendElement(container, element) {
   container.appendChild(element);
 }
 
-const img = createImgHTML(imgArr[0], `${0}img`);
+const img = createImgHTML(imgArr[0], "img", 1);
 const imgWrapper = createDivHTML("iwrapper", "iw");
 const buttonWrapper = createDivHTML("bwrapper", "bw");
 const rightArrow = createIconHTML(arrow, "r-arrow");
@@ -54,19 +55,21 @@ const container = createDivHTML("container", "mc");
 const indicatorContainer = createDivHTML("inc-container", "inc");
 
 imgArr.forEach((i, index) => {
-  appendElement(indicatorContainer, createDivHTML("indicators", `${index + 1}ind`));
+  appendElement(
+    indicatorContainer,
+    createDivHTML("indicators", `${index + 1}-ind`),
+  );
 });
 
 appendElement(imgWrapper, img);
 appendElement(buttonWrapper, leftButton);
 appendElement(leftButton, leftArrow);
-appendElement(buttonWrapper, indicatorContainer)
+appendElement(buttonWrapper, indicatorContainer);
 appendElement(rightButton, rightArrow);
 appendElement(buttonWrapper, rightButton);
 appendElement(container, imgWrapper);
 appendElement(container, buttonWrapper);
 
 export default function sliderUI() {
-    appendElement(document.querySelector("body"), container);
+  appendElement(document.querySelector("body"), container);
 }
-

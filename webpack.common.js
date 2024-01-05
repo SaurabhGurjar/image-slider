@@ -19,7 +19,7 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      title: "Template",
+      title: "Image Slider",
     }),
   ],
   output: {
