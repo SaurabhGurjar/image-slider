@@ -3,44 +3,56 @@ import { imgArr, createImgHTML, appendElement } from "./sliderUI";
 function removeElementFormPage(id) {
   document.getElementById(id).remove();
 }
-function removeClass(id) {
-  document.getElementById(id).classList.remove("active");
+function removeClass(id, cls) {
+  document.getElementById(id).classList.remove(cls);
 }
-function addClass(id) {
-  document.getElementById(id).classList.add("active");
+function addClass(id, cls) {
+  document.getElementById(id).classList.add(cls);
 }
 
 export default function script() {
   const rtButton = document.querySelector("#r-arrow");
   const ltButton = document.querySelector("#l-arrow");
   const imgWrapper = document.querySelector("#iw");
-  const img = document.getElementById("img");
+  const img = document.getElementById("0-img");
   document.getElementById(`${img.dataset.imgid}-ind`).classList.add("active");
+  
 
-  let imgId = Number(img.dataset.imgid);
-  let lastImgId = imgId;
+  let imgId = 0;
+  let lastImgId = 0;
   rtButton.onclick = () => {
+    document.getElementById("iw").style.flexDirection = "row";
+
     if (imgId === imgArr.length) {
       imgId = 0;
     }
-    removeElementFormPage("img");
-    appendElement(imgWrapper, createImgHTML(imgArr[imgId], "img", imgId + 1));
-    removeClass(`${lastImgId}-ind`);
-    addClass(`${imgId + 1}-ind`);
-    imgId += 1;
+
+    appendElement(imgWrapper, createImgHTML(imgArr[imgId], `${imgId}-img`, imgId));
+    addClass("iw", "animation-right");
+    setTimeout(removeClass, 300, "iw", "animation-right");
+    setTimeout(removeElementFormPage, 300, `${lastImgId}-img`);
+  
+    removeClass(`${lastImgId}-ind`, "active");
+    addClass(`${imgId}-ind`, "active");
     lastImgId = imgId;
+    imgId += 1;
   };
 
   ltButton.onclick = () => {
-    if (imgId === 1) {
-      imgId = 5;
+    document.getElementById("iw").style.flexDirection = "row-reverse";
+    if (imgId === 0 ) {
+      imgId = 4;
     }
-    removeElementFormPage("img");
+
+    appendElement(imgWrapper, createImgHTML(imgArr[imgId - 1], `${imgId - 1}-img`, imgId - 1));
+    addClass("iw", "animation-left");
+    setTimeout(removeClass, 300, "iw", "animation-left");
+    setTimeout(removeElementFormPage, 300, `${lastImgId}-img`);
+
+    removeClass(`${lastImgId}-ind`, "active");
+    addClass(`${imgId -1}-ind`, "active");
+    lastImgId = imgId - 1;
     imgId -= 1;
-    appendElement(imgWrapper, createImgHTML(imgArr[imgId - 1], "img", imgId));
-    removeClass(`${lastImgId}-ind`);
-    addClass(`${imgId}-ind`);
-    lastImgId = imgId;
   };
 
   function moveRight() {

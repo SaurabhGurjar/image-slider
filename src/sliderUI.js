@@ -44,7 +44,7 @@ export function appendElement(container, element) {
   container.appendChild(element);
 }
 
-const img = createImgHTML(imgArr[0], "img", 1);
+const img = createImgHTML(imgArr[0], "0-img", 0);
 const imgWrapper = createDivHTML("iwrapper", "iw");
 const buttonWrapper = createDivHTML("bwrapper", "bw");
 const rightArrow = createIconHTML(arrow, "r-arrow");
@@ -57,7 +57,7 @@ const indicatorContainer = createDivHTML("inc-container", "inc");
 imgArr.forEach((i, index) => {
   appendElement(
     indicatorContainer,
-    createDivHTML("indicators", `${index + 1}-ind`),
+    createDivHTML("indicators", `${index}-ind`),
   );
 });
 
